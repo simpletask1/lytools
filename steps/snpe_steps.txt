@@ -1,0 +1,48 @@
+1.snpe installation
+
+首先到官网下载SNPE SDK压缩包并解压
+
+安装依赖项：
+换apt源：bash /public/script/switch_apt_source.sh
+换pip源：bash /public/script/switch_pip_source.sh
+sudo apt-get install python3-dev python3-matplotlib python3-numpy python3-protobuf \
+python3-scipy python3-skimage python3-sphinx wget zip
+
+conda deactivate
+conda create -n env2 python=3.6
+conda activate env2
+pip install pillow packaging onnx
+
+cd ~/snpe-sdk/
+export ANDROID_NDK_ROOT=~/Android/Sdk/ndk-bundle
+source ./bin/envsetup.sh -c ~/caffe #SDK须要用到Caffe的环境
+source ./bin/envsetup.sh -t ~/tensorflowapi
+source bin/envsetup.sh -o /root/miniconda3/envs/env2/lib/python3.6/site-packages/onnx
+(自动将SNPE_ROOT/bin/x86_64-linux-clang、$SNPE_ROOT/lib/python加入PYTHONPATH系统变量中)
+
+2.DLC模型转换
+
+# onnx ——> dlc
+cd $snpe_path/bin/x86_64-linux-clang
+snpe-onnx-to-dlc -i /home/mbnet.onnx -o /home/mbnet.dlc
+
+# pth ——> dlc
+snpe-pytorch-to-dlc -d 'data' 1,3,224,224 \
+--input_network /home/retinanet_fp16_2.pth -o /home/retinanet_coco.dlc
+
+查看：
+snpe-dlc-info -i /home/mbnet.dlc
+
+3.DLC模型推理
+
+准备测试图片，转raw文件，并将地址写入txt:
+cd /home/snpe-1.61.0.3358/models/inception_v3/scripts/
+
+python3 create_inceptionv3_raws.py \
+-i /home/test -d /home/images_raw -s 224 -r bilinear
+
+python3 create_file_list.py -i /home/images_raw -o /home/file_list.txt -e *.raw
+
+推理：
+snpe-net-run --input_list /home/file_list.txt --container /home/mbnet.dlc --output_dir /home/output
+

@@ -1,0 +1,26 @@
+安装：
+pip3 install openmim
+mim install mmcv-full
+cd mmclassification
+pip3 install -e .
+
+# 修改 configs：num_classes
+                topk
+
+# 修改 datasets：CLASSES
+
+python3 tools/train.py my_work/lenet_cfg.py --work-dir my_work/lenet
+
+python3 tools/test.py my_work/mobilenet_2_class.py my_work/epoch_90.pth --out my_work/result.json \
+          --metrics accuracy --show-dir my_work/images_result
+
+# cls.pth——>onnx
+python3 tools/deployment/pytorch2onnx.py my_work/mobilenet_2_class.py \
+--checkpoint my_work/epoch_90.pth \
+--output-file my_work/mbnet_2_class.onnx
+注意：转dlc模型不支持dynamic-export
+
+# det.pth——>onnx
+python3 tools/deployment/pytorch2onnx.py my_work/retinanet_cfg.py \
+my_work/retinanet_r50_fpn_fp16.pth --input-img my_work/images/airplane_001.jpg \
+--output-file my_work/retinanet_coco.onnx --shape 800
