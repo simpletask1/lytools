@@ -12,25 +12,12 @@ GitHub项目重建：
 rm -r build
 python setup.py develop
 ------------------------------------------------------------------------------------------------------
-
 查看python、cuda、cudNN、torch、torchvision版本（pip install package==version）
 python -V
 cat /usr/local/cuda/version.txt
 cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
 torch.__version__   torchvision.__version__
 版本对应关系：python/Linux.docx
--------------------------------------------------------------------------------------------------------
-Git：
-cd 项目目录
-git status 查看状态
-git pull 拉取最新代码
-改动过后：
-git add .
-git commit -m  "提交信息" （提交的信息是你的项目说明）
-    if 本地/远端不一致：
-        git fetch origin master
-        git merge origin/master
-git push origin master（把本地仓库push到github上面）
 -------------------------------------------------------------------------------------------------------
 http://139.224.236.108/                                                  
 user：2ruv5e                           
