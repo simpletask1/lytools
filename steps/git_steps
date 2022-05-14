@@ -1,6 +1,10 @@
 git config -–global user.name "xxx"
 git config –-global user.email "xxx@xxx.com"
 
+token:
+git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
+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
+
 Git：
 cd 项目目录
 git status 查看状态
