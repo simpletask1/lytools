@@ -3,7 +3,7 @@ git config –-global user.email "xxx@xxx.com"
 
 token:
 git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
-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
+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 （有效期3个月）
 
 Git：
 cd 项目目录
