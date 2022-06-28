@@ -1,5 +1,6 @@
 import torch
 import io
+import os
 
 
 def jit_eg():
@@ -29,3 +30,16 @@ def jit_eg():
     input_data = torch.randn(input_shape)
     script_model = torch.jit.trace(resnet18_model, input_data)
     script_model.save("resnet18.pt")
+
+
+def walk_and_delete():
+    src = 'D:\\program file\\curriculums\\微软BI003期'
+    for root, dirs, files in os.walk(src, topdown=False):
+        for name in files:
+            abs_name = os.path.join(root, name)
+            print(abs_name)
+            if abs_name.endswith('dolit'):
+                os.remove(abs_name)
+
+        for name in dirs:
+            print(os.path.join(root, name))

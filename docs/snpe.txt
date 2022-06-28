@@ -1,0 +1,53 @@
+1.snpe installation
+
+首先到官网下载SNPE SDK压缩包并解压
+
+安装依赖项：
+换apt源：bash /public/script/switch_apt_source.sh
+换pip源：bash /public/script/switch_pip_source.sh
+sudo apt-get install python3-dev python3-matplotlib python3-numpy python3-protobuf \
+python3-scipy python3-skimage python3-sphinx wget zip
+
+cd ~/snpe-sdk/
+export ANDROID_NDK_ROOT=~/Android/Sdk/ndk-bundle
+source ./bin/envsetup.sh -c ~/caffe #SDK须要用到Caffe的环境
+source ./bin/envsetup.sh -t ~/tensorflowapi
+source bin/envsetup.sh -o /root/miniconda3/envs/env2/lib/python3.6/site-packages/onnx
+(自动将SNPE_ROOT/bin/x86_64-linux-clang、$SNPE_ROOT/lib/python加入PYTHONPATH系统变量中)
+
+2.DLC模型转换
+
+# onnx ——> dlc
+cd $snpe_path/bin/x86_64-linux-clang
+snpe-onnx-to-dlc -i ssd.onnx -o ssd.dlc \
+                 --input_type 1025 opaque
+
+# TorchScript ——> dlc
+snpe-pytorch-to-dlc -d 'data' 1,3,224,224 \
+--input_network /home/retinanet_fp16_2.pth -o /home/retinanet_coco.dlc
+
+# 量化：
+snpe-dlc-quantize --input_dlc mbnet.dlc  --input_list file_list.txt --enable_htp \
+--htp_socs sm8350 --output_dlc mbnet_quantized.dlc --act_bitwidth=8
+
+查看：
+snpe-dlc-info -i /mnt/mmdetection/my_work/retinanet-9.dlc
+
+3.DLC模型推理
+
+准备测试图片，preprocess，并将地址写入txt:
+cd /mnt/snpe-sdk/models/inception_v3/scripts/
+
+python3 create_inceptionv3_raws.py \
+-i /home/test -d /home/images_raw -s 224 -r bilinear   # images_raw文件夹必须存在
+
+python3 create_file_list.py -i /home/images_raw -o /home/file_list.txt -e *.raw
+
+开始推理：
+snpe-net-run --input_list /home/file_list.txt --container /home/mbnet.dlc \
+--output_dir /home/output_new
+查看log：
+snpe-diagview --input_log output/SNPEDiag_0.log
+计算精度：
+python3 eval_acc.py -i labels.txt -o output_htp -c classes.txt
+

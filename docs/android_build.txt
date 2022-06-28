@@ -1,0 +1,62 @@
+1：
+先将Gradle和Gradle Tool的版本升级到最新
+并检查project structure
+
+2：
+build.gradle(:app)中：
+defaultConfig {
+        applicationId "com.qualcomm.qti.snpe.imageclassifiers"
+        minSdkVersion 21
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+    }
+
+3：
+android编译报错-Could not find com.android.tools.build:aapt2
+解决：build.gradle(:project)加入google()
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+4：
+Lint found fatal errors while assembling a release target.
+解决：build.gradle(:app)中：
+android {
+    buildTypes {
+        release {
+            //在这里添加：
+            lintOptions {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+5：
+debug.apk 安装失败
+解决：
+AS 3.0后，需在gradle.properties下设置：
+android.injected.testOnly=false
+查找根目录下，竟然没有gradel.properties这个文件，幸好其他app中有此文件，拷贝过来，
+Sync now重新编译。

@@ -1,0 +1,38 @@
+1:
+ifconfig 工具下载，查看ip
+
+2：
+进入编辑模式，发现删除键和编辑都不能正常使用，这是由于Ubuntu预装的是vim-tiny，而我们需要使用vim-full
+
+查看ubuntu版本
+lsb_release -a
+
+更新apt
+sudo apt-get update
+
+卸载vim-tiny：
+sudo apt-get remove vim-common
+
+安装vim-full：
+sudo apt-get install vim
+
+3：
+ssh配置
+(1、安装openssh-server
+sudo apt-get install openssh-server
+(2、开机自动启动ssh命令
+sudo systemctl enable ssh
+(3、关闭ssh开机自动启动命令
+sudo systemctl disable ssh
+(4、单次开启ssh
+sudo systemctl start ssh
+(5、单次关闭ssh
+sudo systemctl stop ssh
+(6、设置好后重启系统
+reboot
+(7、查看ssh是否启动，看到Active: active (running)即表示成功
+sudo systemctl status ssh
+
+4:
+更换apt源：utils/docs/apt_aliyun_source.txt
+更换pip源：utils/switch_pip_source.sh (同目录下需要sources.list)

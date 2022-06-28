@@ -6,6 +6,7 @@
 import argparse
 import numpy as np
 import os
+import cv2
 
 from PIL import Image
 
@@ -96,6 +97,25 @@ def __resize_square_to_jpg(src, dst, size, resize_type):
     return 0
 
 
+# my preprocess
+def preprocess(img_file, size):
+    img = cv2.imread(img_file)
+    img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+    input_data = np.transpose(img, (2, 0, 1))
+
+    mean_vec = np.array([123.675, 116.28, 103.53])
+    stddev_vec = np.array([58.395, 57.12, 57.375])
+    norm_img_data = np.zeros(input_data.shape).astype('float32')
+    for i in range(input_data.shape[0]):
+        # for each pixel in each channel, divide the value by 255 to get value between [0, 1] and then normalize
+        norm_img_data[i, :, :] = ((input_data[i, :, :] - mean_vec[i]) / stddev_vec[i]) / 255
+
+    norm_img_data = norm_img_data.reshape([1, 3, size, size])
+    return norm_img_data
+
+
 def convert_img(src, dest, size, resize_type):
     print("Converting images for inception v3 network.")
 
@@ -114,8 +134,9 @@ def convert_img(src, dest, size, resize_type):
             src_image = os.path.join(root, jpgs)
             if '.jpg' in src_image:
                 print(src_image)
-                mean_rgb = (128, 128, 128)
-                __create_raw_incv3(src_image, mean_rgb, 128, False, False)
+                mean_rgb = (123.675, 116.28, 103.53)
+                std_rgb = (58.395, 57.12, 57.375)
+                __create_raw_incv3(src_image, mean_rgb, std_rgb, False, False)
 
 
 def main():
@@ -142,5 +163,38 @@ def main():
     convert_img(src, dest, size, resize_type)
 
 
+def main2():
+    # parser = argparse.ArgumentParser(description="Batch convert jpgs",
+    #                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    # # parser.add_argument('-d', '--dest', type=str, required=True)
+    # parser.add_argument('-s', '--size', type=int, default=224)
+    # parser.add_argument('-i', '--input_img_folder', type=str, required=True)
+    # parser.add_argument('-o', '--output_img_folder', type=str, required=True)
+    # parser.add_argument('-raw', help='use raw output', action='store_true')
+    #
+    # args = parser.parse_args()
+    #
+    # # dest = os.path.abspath(args.dest)
+    # size = args.size
+    # src = os.path.abspath(args.input_img_folder)
+    # dst = os.path.abspath(args.output_img_folder)
+    size = 224
+    src = 'test10'
+    dst = 'images'
+    raw = False
+
+    for img_name in os.listdir(src):
+        full_name = os.path.join(src, img_name)
+        input_data = preprocess(full_name, size)
+        if not raw:
+            cv2.imwrite(os.path.join(dst, 'processed_'+img_name), input_data)
+        else:
+            name, ext = os.path.splitext(img_name)
+            snpe_raw_filename = name
+            snpe_raw_filename += '.raw'
+            input_data.tofile(snpe_raw_filename)
+
+
 if __name__ == '__main__':
-    exit(main())
+    main()
+

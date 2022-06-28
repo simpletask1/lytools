@@ -1,0 +1,24 @@
+1. 解压android-studio
+
+2.防止第一次打开Android Studio时卡在”Fetching Android SDK component information”
+vi /android-studio/bin/idea.properties
+文末添加：
+disable.android.first.run=true
+
+3.增加权限
+sudo chmod 777 /opt/android-studio/bin
+ls -l
+
+
+4.配置android studio环境变量，以便在任何目录下打开android studio：
+vi /etc/profile
+文末添加：
+#android stdio
+export ANDROID_HOME=/opt/android-studio/bin
+export PATH=$PATH:$ANDROID_HOME
+
+同步：
+source /etc/profile
+
+5.配置Android Studio：
+https://blog.csdn.net/qq_22948593/article/details/109957099

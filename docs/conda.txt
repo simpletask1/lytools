@@ -1,0 +1,28 @@
+安装miniconda：
+miniconda官网：https://conda.io/miniconda.html
+
+chmod 777 Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+
+cd miniconda3/bin
+chmod 777 activate
+source ./activate # 出现base环境，安装成功，可用conda list进行验证
+
+
+1.创建和删除环境：
+conda deactivate
+conda create -n env2 python=3.6
+conda activate env2
+
+conda remove -n env2 --all
+
+2.导出和导入conda环境：
+conda activate environment
+conda env export > env2.yml
+
+conda env create -f env2.yml
+
+3.pip环境导出和导入
+pip freeze > requirements.txt
+pip install -r requirements.txt
+

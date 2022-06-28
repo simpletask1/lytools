@@ -1,0 +1,70 @@
+1.python 多线程
+2.爬虫
+3.python web（PHP web）
+4.mysql（密码：Omegaly/90）
+5.tkinter、pyQt界面设计
+
+学习网站： https://www.runoob.com    ；   fast.ai
+pycharm激活码：https://www.playezu.com/build-tool/21926.html  （密码：68451）
+arxiv国内镜像   http://xxx.itp.ac.cn/pdf/
+
+GitHub项目重建：
+rm -r build
+python setup.py develop
+------------------------------------------------------------------------------------------------------
+查看python、cuda、cudNN、torch、torchvision版本（pip install package==version）
+python -V
+cat /usr/local/cuda/version.txt
+cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+torch.__version__   torchvision.__version__
+版本对应关系：python/Linux.docx
+-------------------------------------------------------------------------------------------------------
+http://139.224.236.108/                                                  
+user：2ruv5e                           
+password：3jnyu
+-------------------------------------------------------------------------------------------------------
+MySQL   https://www.cnblogs.com/best/p/6517755.html 
+ubuntu：  http://mirrors.melbourne.co.uk/ubuntu-releases/
+设计模式学习：https://www.runoob.com/design-pattern/design-pattern-intro.html
+
+********************************************************************************************************
+目标跟踪论文汇总： https://github.com/foolwood/benchmark_results
+yolov3-pytorch： https://blog.csdn.net/weixin_40373414/article/details/82415272
+SSD实现 ： https://zhuanlan.zhihu.com/p/92154612
+yolov3实现：  https://blog.csdn.net/ahilll/article/details/83410293
+                         https://blog.csdn.net/sinat_27634939/article/details/89884011
+                         https://github.com/ultralytics/yolov3
+
+yolov4：  https://github.com/bubbliiiing/yolov4-pytorch
+
+实现faster rcnn ： https://blog.csdn.net/watermelon1123/article/details/100095940
+mmdetection介绍： https://www.zhihu.com/question/294578141?sort=created
+Detectron2部署： https://github.com/facebookresearch/detectron2/blob/master/INSTALL.md
+
+YOLO解读：  https://www.cnblogs.com/fariver/p/7446921.html
+RNN：  http://www.sohu.com/a/229816106_633698
+
+R-FCN论文阅读： https://blog.csdn.net/baidu_32173921/article/details/71741970
+
+mask r-cnn细读： https://blog.csdn.net/wangdongwei0/article/details/83110305
+
+centerNet解读： https://www.xianjichina.com/special/detail_396816.html
+********************************************************************************************************
+吴恩达机器学习
+https://study.163.com/course/courseMain.htm?courseId=1004570029&_trace_c_p_k2_=da8d8a0c237e4a1da93f64421c356710
+
+cs231n
+https://study.163.com/course/courseLearn.htm?courseId=1003223001#/learn/video?lessonId=1004209044&courseId=1003223001
+cs231n中文版讲义：
+https://zhuanlan.zhihu.com/p/21930884
+
+numpy教程
+https://www.jianshu.com/p/6ddd9190e4cf   ； https://m.runoob.com/numpy/
+
+道路提取
+https://blog.csdn.net/sparkexpert/article/details/80835759
+
+阅读英文文献的建议
+https://www.zhihu.com/question/20218881
+
+
