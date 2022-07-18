@@ -33,6 +33,15 @@
     两种定义方式：
     #define预处理器
     const关键字
+#### 指针
+    1. *的用法：
+    指针声明：int* p; 或 int *p;
+    复合指针：int** p; 或 int **p;
+    解引用：x = *p;
+    2. &的用法：
+    求地址：p = &x; //把x的地址赋给指针p
+    传引用：void func(int& r){} //传入的是变量的引用，直接对传入的变量进行操作
+    
 ```c++
 typedef type new_name;
 
