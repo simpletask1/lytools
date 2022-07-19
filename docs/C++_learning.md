@@ -17,8 +17,8 @@
 ### 优先学习
     * makefile编译流程；cmake（CmakeLists）
     * 工程结构：.cc中定义，.h中声明
-    * 变量作用域；函数；指针；面向对象；
-    * opencv2/opencv.hpp；nlohmann/json.hpp；
+    * 函数；指针；面向对象；
+    * opencv2/opencv.hpp；nlohmann/json.hpp；boost/filesystem.hpp
 ### 笔记及示例
 #### 函数
     函数声明告诉编译器函数的`名称`、`返回类型`和`参数`
@@ -41,6 +41,7 @@
     2. &的用法：
     求地址：p = &x; //把x的地址赋给指针p
     传引用：void func(int& r){} //传入的是变量的引用，直接对传入的变量进行操作
+    3. p->a 就是 (*p).a
     
 ```c++
 typedef type new_name;
